@@ -1,54 +1,51 @@
-
-
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 using namespace std;
 
-vector<int> _missingList;
+int _numsCount = 0;
 int _res = 0;
-
-void DisplayList(vector<int> theList) {
-    int solo = 0;
-
-    for (int i = 0; i < theList.size(); i++) {
-        solo = theList[i];
-
-        cout << solo << ",";
-    }
-
-    cout << endl;
-}
+vector<int> _numsList;
 
 void ParseIn() {
-    int maxi = 0;
-    int curInt = 0;
 
-    cin >> maxi;
+    // ifstream fin("template.in");
 
-    for (int i = 0; i < maxi - 1; i++) {
-        cin >> curInt;
-        _missingList.push_back(curInt);
+    int solo = 0;
+    cin >> _numsCount;
+
+    for (int i = 0; i < _numsCount - 1; i++) {
+        cin >> solo;
+        // cout << solo << endl;
+        _numsList.push_back(solo);
     }
+
 }
+
 
 void Core() {
-    int ans = 0;
+    int tmp = 0;
     int solo = 0;
 
-    for (int i = 0; i < _missingList.size(); i++) {
-        solo = _missingList[i];
-        ans ^= solo;
-        ans ^= i + 1;
+    for (int i = 0; i < _numsCount - 1; i++) {
+        tmp ^= i + 1;
+        tmp ^= _numsList[i];
+        // cout << tmp << ',';
+
     }
 
-    ans ^= _missingList.size() + 1;
-    _res = ans;
+    tmp ^= _numsCount;
+
+    _res = tmp;
 }
 
+
 void CWriteOut() {
+    // ofstream fout("template.out");
     cout << _res << endl;
 }
+
 
 int main() {
     ParseIn();
