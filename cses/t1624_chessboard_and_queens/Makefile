@@ -1,8 +1,8 @@
 # Define required macros here
 SHELL = /bin/sh
-CC = /usr/bin/clang++
-CFLAGS  = -Wall -Werror -std=c++11 -fdiagnostics-color=always
-# CFLAGS  = -Wall -Werror -std=c++11 -fdiagnostics-color=always -g
+CC = /usr/bin/g++
+CFLAGS  = -std=c++11 -O2 -Wall -fdiagnostics-color=always
+# CFLAGS  = -std=c++11 -O2 -Wall -fdiagnostics-color=always -g
 
 all: $(patsubst %.cpp, %.out, $(wildcard *.cpp))
 
