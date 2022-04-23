@@ -53,24 +53,19 @@ void ParseIn()
 
 bool IsValidBoard(vector<int> board)
 {
+    // Empty board is always valid
     if (board.size() == 0) {
         return true;
     }
 
-    for (auto piece : _blockerSet)
-    {
-        if (piece.first < int(board.size()) && board[piece.first] == piece.second)
-        {
-            return false;
-        }
-    }
-
+    // The lastly placed piece shall not attack existing pieces.
     int last_row = board.size() - 1;
     int last_col = board[last_row];
     int j = -1;
     for (int i = 0; i < last_row; i++)
     {
-        /* make sure column and both diagnal lines are not occupied.
+        /* make sure attacking does not happen on column and both diagnal lines.
+            For example: if last piece * is placed on (3, 2)
             .o.o....
             ooo.....
             o*oooooo
@@ -81,9 +76,18 @@ bool IsValidBoard(vector<int> board)
             .o....o.
          */
         j = board[i];
-        if (j == last_col ||                // column was occupied
-            i + j == last_row + last_col || // slash was occupied
-            i - j == last_row - last_col)   // backslash was occupied
+        if (j == last_col ||                // same column attack
+            i + j == last_row + last_col || // same slash attack
+            i - j == last_row - last_col)   // same backslash attack
+        {
+            return false;
+        }
+    }
+
+    // Make sure all places are not blocked
+    for (auto piece : _blockerSet)
+    {
+        if (piece.first < int(board.size()) && board[piece.first] == piece.second)
         {
             return false;
         }
